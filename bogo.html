@@ -1,0 +1,633 @@
+	<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jovan Bogojevic — Inventor & Systems Architect</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#06090f;
+  --gold:#c8a84b;
+  --gold2:#e8c86b;
+  --steel:#a8b8c8;
+  --dim:#3a4455;
+  --text:#e0e8f0;
+  --muted:#7a8898;
+  --panel:#0d1520;
+  --red:#c04030;
+}
+html,body{width:100%;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Georgia',serif;overflow-x:hidden;}
+
+/* ── HERO ── */
+#hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+#hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%, #0a1a2a 0%, #06090f 70%);
+}
+/* Animated grid lines */
+#hero-bg::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  animation:gridmove 20s linear infinite;
+}
+@keyframes gridmove{from{transform:translateY(0);}to{transform:translateY(60px);}}
+
+#hero-content{
+  position:relative;z-index:2;
+  display:flex;
+  align-items:center;
+  gap:80px;
+  max-width:1100px;
+  padding:60px 40px;
+}
+
+/* Photos */
+#photo-cluster{
+  flex-shrink:0;
+  position:relative;
+  width:280px;
+  height:340px;
+}
+.photo-frame{
+  position:absolute;
+  border:2px solid var(--gold);
+  overflow:hidden;
+  box-shadow:0 0 40px rgba(200,168,75,0.15);
+}
+.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+#photo-young{
+  width:130px;height:170px;
+  top:0;left:0;
+  border-color:var(--dim);
+  filter:grayscale(1) contrast(1.1);
+  transform:rotate(-3deg);
+}
+#photo-now{
+  width:180px;height:220px;
+  bottom:0;right:0;
+  z-index:2;
+}
+.photo-year{
+  position:absolute;
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--gold);
+  text-transform:uppercase;
+  background:var(--bg);
+  padding:3px 8px;
+}
+#year-young{bottom:-18px;left:0;}
+#year-now{top:-18px;right:0;}
+
+/* Hero text */
+#hero-text{flex:1;}
+#hero-name{
+  font-size:clamp(36px,5vw,64px);
+  font-weight:400;
+  letter-spacing:6px;
+  color:var(--gold);
+  text-transform:uppercase;
+  line-height:1;
+  margin-bottom:8px;
+}
+#hero-aka{
+  font-size:13px;
+  letter-spacing:4px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:24px;
+}
+#hero-dates{
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--dim);
+  margin-bottom:32px;
+}
+#hero-tagline{
+  font-size:clamp(15px,2vw,20px);
+  color:var(--steel);
+  line-height:1.6;
+  font-style:italic;
+  max-width:480px;
+  border-left:2px solid var(--gold);
+  padding-left:20px;
+  margin-bottom:32px;
+}
+#hero-stats{
+  display:flex;gap:40px;flex-wrap:wrap;
+}
+.hstat{text-align:center;}
+.hstat-val{font-size:28px;font-weight:700;color:var(--gold);display:block;font-family:'Arial',sans-serif;}
+.hstat-lbl{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+
+/* ── SECTION BASE ── */
+.section{padding:80px 40px;max-width:1100px;margin:0 auto;}
+.section-eyebrow{
+  font-size:9px;letter-spacing:4px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-eyebrow::after{content:'';flex:1;height:1px;background:var(--dim);}
+.section-title{
+  font-size:clamp(24px,3vw,36px);
+  font-weight:400;letter-spacing:2px;
+  color:var(--text);margin-bottom:48px;
+}
+
+/* ── TIMELINE ── */
+#timeline-wrap{position:relative;padding-left:40px;}
+#timeline-wrap::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:1px;background:linear-gradient(to bottom, transparent, var(--gold), transparent);
+}
+.era{
+  position:relative;
+  margin-bottom:56px;
+  cursor:pointer;
+}
+.era-dot{
+  position:absolute;
+  left:-46px;top:6px;
+  width:12px;height:12px;
+  border-radius:50%;
+  border:2px solid var(--gold);
+  background:var(--bg);
+  transition:all 0.3s;
+}
+.era:hover .era-dot{background:var(--gold);box-shadow:0 0 16px var(--gold);}
+.era-period{
+  font-size:10px;letter-spacing:3px;color:var(--muted);
+  text-transform:uppercase;margin-bottom:6px;font-family:'Arial',sans-serif;
+}
+.era-company{
+  font-size:18px;color:var(--gold);margin-bottom:4px;letter-spacing:1px;
+}
+.era-role{
+  font-size:13px;color:var(--steel);margin-bottom:12px;letter-spacing:0.5px;
+}
+.era-body{
+  font-size:14px;color:var(--muted);line-height:1.7;
+  max-height:0;overflow:hidden;
+  transition:max-height 0.5s ease, opacity 0.4s;
+  opacity:0;
+}
+.era.open .era-body{max-height:300px;opacity:1;}
+.era-badge{
+  display:inline-block;
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border:1px solid var(--dim);
+  color:var(--muted);border-radius:2px;margin-top:10px;
+  font-family:'Arial',sans-serif;
+}
+
+/* ── ORIGIN STORY ── */
+#origin{background:linear-gradient(135deg,#0a1018,#060c14);}
+#origin-inner{max-width:1100px;margin:0 auto;padding:80px 40px;}
+.origin-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+.origin-quote{
+  font-size:clamp(18px,2.5vw,26px);
+  font-style:italic;
+  color:var(--steel);
+  line-height:1.6;
+  border-left:3px solid var(--gold);
+  padding-left:28px;
+  margin-bottom:32px;
+}
+.origin-text{font-size:14px;color:var(--muted);line-height:1.9;}
+.origin-text p{margin-bottom:16px;}
+.origin-text strong{color:var(--steel);}
+
+/* ── SKILLS CONSTELLATION ── */
+#skills-canvas-wrap{text-align:center;padding:20px 0 60px;}
+canvas#skills-canvas{max-width:100%;cursor:default;}
+
+/* ── PHILOSOPHY CARDS ── */
+#philosophy-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.phil-card{
+  padding:32px;
+  border:1px solid var(--dim);
+  border-top:2px solid var(--gold);
+  background:var(--panel);
+  position:relative;
+  overflow:hidden;
+}
+.phil-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at top left, rgba(200,168,75,0.04), transparent 60%);
+}
+.phil-number{
+  font-size:48px;font-weight:900;
+  color:rgba(200,168,75,0.08);
+  font-family:'Arial',sans-serif;
+  position:absolute;top:16px;right:20px;
+  line-height:1;
+}
+.phil-title{font-size:13px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.phil-text{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* ── BOGOBOT CTA ── */
+#bogobot{
+  text-align:center;
+  padding:100px 40px;
+  position:relative;
+  overflow:hidden;
+}
+#bogobot::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center, rgba(200,168,75,0.06) 0%, transparent 70%);
+}
+#bogobot-label{
+  font-size:10px;letter-spacing:5px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:20px;
+}
+#bogobot-title{
+  font-size:clamp(28px,5vw,56px);
+  font-weight:400;letter-spacing:4px;
+  color:var(--text);margin-bottom:16px;
+  text-transform:uppercase;
+}
+#bogobot-sub{
+  font-size:16px;color:var(--muted);
+  font-style:italic;margin-bottom:48px;
+  max-width:600px;margin-left:auto;margin-right:auto;
+}
+.pig{font-size:48px;margin-bottom:24px;display:block;}
+#cta-btn{
+  display:inline-block;
+  padding:16px 48px;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  text-decoration:none;font-family:'Arial',sans-serif;
+  transition:all 0.3s;
+  position:relative;
+}
+#cta-btn:hover{background:rgba(200,168,75,0.1);box-shadow:0 0 40px rgba(200,168,75,0.15);}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--dim);
+  padding:40px;
+  text-align:center;
+  font-size:11px;color:var(--muted);
+  letter-spacing:2px;
+}
+footer a{color:var(--gold);text-decoration:none;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--dim),transparent);margin:0 40px;}
+
+/* Responsive */
+@media(max-width:768px){
+  #hero-content{flex-direction:column;gap:40px;padding:40px 24px;}
+  #photo-cluster{width:220px;height:270px;}
+  #photo-young{width:100px;height:130px;}
+  #photo-now{width:140px;height:175px;}
+  .origin-grid{grid-template-columns:1fr;}
+  .section{padding:60px 24px;}
+  #origin-inner{padding:60px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<div id="hero">
+  <div id="hero-bg"></div>
+  <div id="hero-content">
+    <div id="photo-cluster">
+      <div class="photo-frame" id="photo-young">
+        <img src="Bogo__2_.jpg" alt="Jovan Bogojevic, Beograd ~1955">
+        <span class="photo-year" id="year-young">Beograd · 1955</span>
+      </div>
+      <div class="photo-frame" id="photo-now">
+        <img src="Bild_Jovan.jpg" alt="Jovan Bogojevic, Wien 2024">
+        <span class="photo-year" id="year-now">Wien · 2024</span>
+      </div>
+    </div>
+    <div id="hero-text">
+      <div id="hero-name">Jovan Bogojevic</div>
+      <div id="hero-aka">„Bogo" · Erfinder · Systemarchitekt</div>
+      <div id="hero-dates">22. Juli 1952 · Beograd → Wien</div>
+      <div id="hero-tagline">
+        „Sagen Sie mir was Ihnen wehtut — das mach ich."<br>
+        <span style="font-size:11px;font-style:normal;letter-spacing:2px;color:var(--muted);">— Turkof Elektronik, Wien, 1983</span>
+      </div>
+      <div id="hero-stats">
+        <div class="hstat"><span class="hstat-val">45+</span><span class="hstat-lbl">Jahre IT</span></div>
+        <div class="hstat"><span class="hstat-val">53</span><span class="hstat-lbl">Archivdokumente</span></div>
+        <div class="hstat"><span class="hstat-val">3</span><span class="hstat-lbl">Sprachen</span></div>
+        <div class="hstat"><span class="hstat-val">1</span><span class="hstat-lbl">Erfindung · aktiv</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ KARRIERE ══════════ -->
+<div class="section">
+  <div class="section-eyebrow">Beruflicher Werdegang</div>
+  <div class="section-title">Vier Jahrzehnte. Kein Leerlauf.</div>
+  <div id="timeline-wrap">
+
+    <div class="era" onclick="toggleEra(this)">
+      <div class="era-dot"></div>
+      <div class="era-period">2026 — Laufend</div>
+      <div class="era-company">BogoBot.</div>
+      <div class="era-role">Chefentwickler & Systemarchitekt · IP-Transfer</div>
+      <div class="era-body">
+        Entwicklung einer hybriden, IP67-vollversiegelten autonomen Bewegungsplattform aus V4A-Edelstahl. Selbsthemmend, wartungsfrei. Sechs identische Aktuatoren. Terrain-agnostisch, LLM-agnostisch, Anwendung-agnostisch. Zielgruppe: chinesische Hersteller, Amazon-Klasse Logistik, Pharma-Reinraum, Landwirtschaft. IP-Transfer Patent rechte frei — Käufer wird erster Anmelder.
+        <span class="era-badge">Sofort vefügbar. 90 Tage je 2 h IP transfer inklusive</span>
+        <span class="era-badge">🐷 EIER LEGENDE VOLLMILCH SAU</span>
+      </div>
+    </div>
+
+    <div class="era" onclick="toggleEra(this)">
+      <div class="era-dot"></div>
+      <div class="era-period">2009 — 2022 · 13 Jahre</div>
+      <div class="era-company">UniCredit Group · BAGIS · UGIS · IT-Austria</div>
+      <div class="era-role">Technischer Experte & iSeries-Spezialist</div>
+      <div class="era-body">
+        Langjährige krisensichere Verantwortung für die IT-Infrastruktur des Kernbanksystems. Vollumfänglich zuständig für hochvolumige iSeries (AS/400) Transaktionen. Gesetzlicher Betriebsübergang ex lege unter vollständiger Wahrung aller historischen Rechte. Operative Verantwortung bis zur regulären Pensionierung.
+        <span class="era-badge">AS/400 · iSeries</span>
+        <span class="era-badge">Lassallestraße 5, Wien</span>
+      </div>
+    </div>
+
+    <div class="era" onclick="toggleEra(this)">
+      <div class="era-dot"></div>
+      <div class="era-period">1994 — 2005 · 11 Jahre</div>
+      <div class="era-company">Octapharma AG</div>
+      <div class="era-role">Group IT Director / Responsible Head of Data Processing</div>
+      <div class="era-body">
+        Globaler Aufbau und Management der IT-Landschaft in einem hochregulierten pharmazeutischen Umfeld. Implementierung internationaler Compliance-Frameworks: FDA CFR 21 Part 11, GAMP 5, GMP-Richtlinien für Humanplasma-Verarbeitung. 1999 Ernennung zum Responsible Head of Data Processing durch den Vice President — Octapharma-weit. Direkte Berichtslinie zum CFO.
+        <span class="era-badge">FDA · GMP · Wien & Frankreich</span>
+        <span class="era-badge">Beförderung 1999</span>
+      </div>
+    </div>
+
+    <div class="era" onclick="toggleEra(this)">
+      <div class="era-dot"></div>
+      <div class="era-period">2001 — 2002</div>
+      <div class="era-company">Neudörfler Büromöbel</div>
+      <div class="era-role">EDV- & Finanzleiter</div>
+      <div class="era-body">
+        Leitung kaufmännischer und finanzieller IT-Abteilung. Strategische Restrukturierung, WAN-Neuaufbau, EDV-Hotline, Firmennetzwerkstruktur für Zentrale und alle Geschäftsstellen. Ausgezeichnet für: Höchstmaß an Genauigkeit, Verlässlichkeit und Innovation.
+        <span class="era-badge">WAN · MBI-System</span>
+      </div>
+    </div>
+
+    <div class="era" onclick="toggleEra(this)">
+      <div class="era-dot"></div>
+      <div class="era-period">1988 — 1996 · 8 Jahre</div>
+      <div class="era-company">Danfoss Ges.m.b.H.</div>
+      <div class="era-role">IT-Direktor · Leiter Datenkommunikation Osteuropa · Produktmanager PL 12 Osteuropa</div>
+      <div class="era-body">
+        Strategische Systemoptimierungen, industrielle Instrumentierung, grenzüberschreitende digitale Vernetzung CEE-Region. Entwicklung des „Grazer Programms": dezentrale Auftragsverwaltung auf PC, synchronisiert per Delta-Übertragung mit der Wiener AS/400 — Edge Computing 35 Jahre vor dem Begriff. Mehrfach ausgezeichnet mit Sonderprämien der Geschäftsleitung.
+        <span class="era-badge">AS/400 · Delta-Sync</span>
+        <span class="era-badge">Grazer Programm / AS 400 auf PC Simulation </span>
+      </div>
+    </div>
+
+    <div class="era" onclick="toggleEra(this)">
+      <div class="era-dot"></div>
+      <div class="era-period">1983 — 1987 · 4 Jahre</div>
+      <div class="era-company">Turkof Elektronik</div>
+      <div class="era-role">Technischer Entwickler & Systemanalytiker</div>
+      <div class="era-body">
+        Erster Einstieg nach der Ankunft in Wien. 18 defekte japanische Hochleistungs-Oszilloskope repariert — in zwei Wochen. Hochspannung bis 16.000V. Entwicklung eines Anrufkonzentrators: 16 Telefonleitungen, ein Anrufbeantworter. Eigenständige Produktentwicklung ohne Auftrag — weil das Problem störte.
+        <span class="era-badge">16kV Hochspannung</span>
+        <span class="era-badge">Eigenentwicklung</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════ ORIGIN ══════════ -->
+<div id="origin">
+  <div id="origin-inner">
+    <div class="section-eyebrow" style="max-width:1100px;margin:0 auto 12px;">Herkunft & Fundament</div>
+    <div class="section-title" style="max-width:1100px;margin:0 auto 48px;">Beograd → Wien. Die echte Geschichte.</div>
+    <div class="origin-grid">
+      <div>
+        <div class="origin-quote">
+          „Wir lebten 1 km vom Kernreaktor Vinča entfernt. Den Unfall von 1958 habe ich als Sechsjähriger erlebt."
+        </div>
+        <div class="origin-text">
+          <p>Vater: Qualitätskontrolle für den Nikola-Tesla Fabrik in Zvezdara. Vier Geschwister. Nach dem Reaktorunfall strategische Umsiedlung nach Zentral-Beograd für Bildung und Sicherheit.</p>
+          <p><strong>Mit 8 Jahren</strong> baute Bogo seinen ersten Röhrenempfänger. Während der Schulzeit am XI. Belgrader Gymnasium: ein eigener Fernsehreparaturdienst mit systematischem Kundenbuch — zur materiellen Unterstützung der Familie.</p>
+          <p><strong>Universität Belgrad:</strong> Anorganische Technische Chemie. Parallel: Englische Philologie bei Professor Voja Vidović bis zur vollen Verhandlungssicherheit.</p>
+          <p><strong>Chip-Level Reverse Engineering:</strong>Platinen für VTI (Vojnotehnički Institut) und die eigene Universität.</p>
+        </div>
+      </div>
+      <div>
+        <div class="origin-quote">
+          „Der Onkel kam mit einem Kilo Kaffee. Aus meinem eigenen Geld. So kam ich nach Wien."
+        </div>
+        <div class="origin-text">
+          <p><strong>HP-41 Klub Wien:</strong> Vor Turkof entwickelte Bogo eine proprietäre Speichererweiterung für den HP-41C — form-fit-function, PCB in Beograd gefertigt bei VTI. Der Klub ernannte ihn zum Hardware-Verantwortlichen. Er kam nicht als Mitglied — er kam als jemand der etwas hatte was der Klub brauchte.</p>
+          <p><strong>Deutsch:</strong> Kein Sprachkurs. Keine Bücher. Direkt auf der Straße — Kundengeräte annehmen, Telefon beantworten, Anrufe durchstellen. Wort für Wort.</p>
+          <p><strong>XLeco / WebShopCity:</strong> Vor 25 Jahren: Single-Instance-Multitenancy für hunderte serbische Schulen und Botschaften weltweit. Security Outside the Document Root. No-Third-Party-Paradigma. Edge Computing. Privacy by Design. Alles das was heute Cloud-SaaS heißt — altruistisch, ohne Gewinn, erfolgreich beendet.</p>
+          <p><strong>Wehrdienst:</strong> Panzerdivisionen. Wartung und Kalibrierung fahrzeuggebundener Funkanlagen in T-34 und T-72.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SKILLS CANVAS ══════════ -->
+<div class="section">
+  <div class="section-eyebrow">Kompetenzkarte</div>
+  <div class="section-title">Ein Netz, keine Liste.</div>
+  <div id="skills-canvas-wrap">
+    <canvas id="skills-canvas" width="900" height="500"></canvas>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════ PHILOSOPHIE ══════════ -->
+<div class="section">
+  <div class="section-eyebrow">Denkweise</div>
+  <div class="section-title">Sechs Prinzipien. Immer gültig.</div>
+  <div id="philosophy-grid">
+    <div class="phil-card">
+      <div class="phil-number">1</div>
+      <div class="phil-title">Problem zuerst</div>
+      <div class="phil-text">Kein Lebenslauf, keine Zertifikate. Ein Problem, ein Werkzeug, eine Lösung. Die Frage ist nie „wer bist du" — sondern „was tut weh".</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-number">2</div>
+      <div class="phil-title">Gleichteile-Prinzip</div>
+      <div class="phil-text">Das wichtigste Ingenieurprinzip: gleicher Würfel, gleiche Lager, gleicher Aktuator — für alle Kraftklassen. Variationen nur wo physisch notwendig. Kompromisse niemals.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-number">3</div>
+      <div class="phil-title">Kein Vendor Lock-in</div>
+      <div class="phil-text">LLM-agnostisch. Patent-agnostisch. Terrain-agnostisch. Anwendung-agnostisch. Das System gehört dem Käufer — vollständig, ohne Abhängigkeit.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-number">4</div>
+      <div class="phil-title">Gehirn lassen</div>
+      <div class="phil-text">Das Gehirn arbeitet nachts weiter. Morgens kommen die besten Ideen. Man streitet nicht mit ihm — man lässt ihn träumen. Meistens hat er recht.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-number">5</div>
+      <div class="phil-title">HI + KI</div>
+      <div class="phil-text">HI Bogo + KI Bogo = positive Naturkatastrophe. Bogo zähmt die KI. Die KI korrigiert Bogo. Keiner alleine erreicht das Ergebnis des anderen. Das ist die Methode.</div>
+      
+   </div> <div class="phil-card">
+      <div class="phil-number">6</div>
+      <div class="phil-title">Immer zusamenarbeit anstreben</div>
+      <div class="phil-text">.Alle koinflikte sind kontraproduktiv und verbrauchen unnötige energie, daraus läst sich viel Kapital machen</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ BOGOBOOT CTA ══════════ -->
+<div id="bogoboot">
+  <div style="position:relative;z-index:2;">
+    <div id="bogobot-label">Aktuelles Projekt · 2026</div>
+    <span class="pig">🐷</span>
+    <div id="bogobot-title">BogoBoot · Platform V1</div>
+    <div id="bogobot-sub">
+      „Kein Marketing-Begriff. Eine technische Tatsache.<br>
+      Ein Gerät. Alle Terrains. Alle Industrien. Alle Klimazonen."
+    </div>
+    <a href="mailto:jovan@bogojevic.com" id="cta-btn">jovan@bogojevic.com</a>
+    <div style="margin-top:20px;font-size:10px;letter-spacing:3px;color:var(--dim);">
+      NDA → Technische Dokumentation → Kaufvertrag + IP-Transfer
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:8px;">
+    <a href="mailto:jovan@bogojevic.com">jovan@bogojevic.com</a>
+    &nbsp;·&nbsp;
+    <a href="https://bogo.fun">bogo.fun</a>
+    &nbsp;·&nbsp;
+    Wien, Österreich
+  </div>
+  <div style="color:var(--dim);">
+    Jovan Bogojevic · *22.07.1952 Beograd · Österreichischer Staatsbürger seit 1986
+  </div>
+  <div style="margin-top:12px;color:#2a3040;font-size:9px;">
+    Erstellt von KI Bogo + HI Bogo · Wien 2026
+  </div>
+</footer>
+
+<script>
+// ── TIMELINE TOGGLE ──
+function toggleEra(el){
+  var wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.era').forEach(function(e){e.classList.remove('open');});
+  if(!wasOpen)el.classList.add('open');
+}
+// Open first by default
+document.querySelectorAll('.era')[0].classList.add('open');
+
+// ── SKILLS CONSTELLATION ──
+(function(){
+  var canvas=document.getElementById('skills-canvas');
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width,H=canvas.height;
+  var cx=W/2,cy=H/2;
+
+  var nodes=[
+    {label:'iSeries / AS/400',x:cx,y:cy,r:18,core:true,color:'#c8a84b'},
+    {label:'PHP / Web-Arch.',x:cx+160,y:cy-80,r:12,color:'#7a9acc'},
+    {label:'Pharma-IT / FDA',x:cx+80,y:cy-160,r:14,color:'#7a9acc'},
+    {label:'Elektronik / HW',x:cx-160,y:cy-80,r:14,color:'#7a9acc'},
+    {label:'Chip-Level RE',x:cx-80,y:cy-160,r:11,color:'#6a8abb'},
+    {label:'Datenkommunikation',x:cx+180,y:cy+60,r:12,color:'#7a9acc'},
+    {label:'GMP / Compliance',x:cx+60,y:cy+160,r:11,color:'#6a8abb'},
+    {label:'Systemarchitektur',x:cx-60,y:cy+160,r:13,color:'#7a9acc'},
+    {label:'Mechanik / V4A',x:cx-180,y:cy+60,r:12,color:'#c8a84b'},
+    {label:'Multi-Tenant SaaS',x:cx+240,y:cy-20,r:10,color:'#6a8abb'},
+    {label:'Osteuropa IT',x:cx-240,y:cy-20,r:10,color:'#6a8abb'},
+    {label:'Aktuatorsysteme',x:cx-130,y:cy+140,r:11,color:'#c8a84b'},
+    {label:'Deutsch / EN / SR',x:cx+130,y:cy+140,r:9,color:'#5a7a9a'},
+    {label:'BogoBot / IP67',x:cx+10,y:cy+80,r:10,color:'#c8a84b'},
+  ];
+
+  var edges=[
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10],[0,11],[0,13],
+    [1,9],[2,6],[3,4],[3,11],[7,11],[7,13],[8,11]
+  ];
+
+  var anim=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    anim+=0.008;
+
+    // edges
+    edges.forEach(function(e){
+      var a=nodes[e[0]],b=nodes[e[1]];
+      var pulse=0.3+0.15*Math.sin(anim+e[0]);
+      ctx.beginPath();
+      ctx.moveTo(a.x,a.y);
+      ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle='rgba(200,168,75,'+pulse+')';
+      ctx.lineWidth=0.8;
+      ctx.stroke();
+    });
+
+    // nodes
+    nodes.forEach(function(n,i){
+      var glow=n.core?0.6+0.2*Math.sin(anim*1.5):0.3+0.1*Math.sin(anim+i);
+      // glow
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r*2.5,0,Math.PI*2);
+      var g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*2.5);
+      g.addColorStop(0,'rgba(200,168,75,'+glow*0.3+')');
+      g.addColorStop(1,'transparent');
+      ctx.fillStyle=g;
+      ctx.fill();
+      // circle
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=n.core?'rgba(200,168,75,0.15)':'rgba(13,21,32,0.9)';
+      ctx.fill();
+      ctx.strokeStyle=n.color;
+      ctx.lineWidth=n.core?2:1;
+      ctx.stroke();
+      // label
+      ctx.fillStyle=n.core?'#c8a84b':'#a0b0c0';
+      ctx.font=(n.core?'bold ':'')+Math.min(n.r*0.75,11)+'px Arial';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      if(n.core){ctx.fillText(n.label,n.x,n.y);}
+      else{
+        var off=n.r+8;
+        var angle=Math.atan2(n.y-cy,n.x-cx);
+        ctx.fillText(n.label,n.x+Math.cos(angle)*off,n.y+Math.sin(angle)*off);
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
